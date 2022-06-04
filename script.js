@@ -294,6 +294,13 @@ function refreshPage() {
     location.reload();
 }
 
+function onPageLoad() {
+    let values = document.getElementsByClassName("value-pair");
+    values[0].value = makeid(16);
+}
+
+onPageLoad();
+
 $("#main-form").submit(function(e) {
     e.preventDefault(); // <==stop page refresh==>
 });
