@@ -170,6 +170,23 @@ function makeid(length) {
    return result;
 }
 
+function createKeySection(keyInput) {
+    // <button class="btn btn-outline-danger delete-button">x</button>
+    // <div class="d-flex flex-row"></div>
+    /* div */
+    let wrapperDiv = document.createElement("div");
+    wrapperDiv.classList.add("d-flex", "flex-row");
+    /* delete button */
+    let deleteButton = document.createElement("button");
+    deleteButton.innerText = "X";
+    deleteButton.classList.add("btn", "btn-outline-danger", "delete-button");
+    /* key input */
+    keyInput.classList.add("key-pair");
+
+    wrapperDiv.append(deleteButton, keyInput);
+    return wrapperDiv;
+}
+
 function addInput(type, startingValue) {
     /* div */
     let columnDiv = document.createElement("div");
@@ -179,22 +196,17 @@ function addInput(type, startingValue) {
     /* input */
     let input = document.createElement("input");
     input.classList.add("form-control");
-    if (type === "key") {
-        input.classList.add("key-pair");
-        // let deleteButton = document.createElement("span");
-        // deleteButton.innerText = "X";
-        // columnDiv.append(deleteButton);
-    }
+    if (type === "key") 
+        input = createKeySection(input);
     else if (type === "valuePair")
         input.classList.add("value-pair")
     else if (type === "valueOnly")
         input.classList.add("value-pair")
-    // type === "key" ? input.classList.add("key-pair") : input.classList.add("value-pair")
-    if (startingValue !== "") {
+    
+    if (startingValue !== "")
         input.value = startingValue;
-    } else {
+    else
         type === "key" ? input.placeholder = "key" : input.placeholder = "value";
-    }
 
     columnDiv.append(input); 
     return columnDiv;
@@ -238,12 +250,9 @@ function generateJson() {
     for (let i=0; i < keys.length; i++) {
         /* add key */
         json += `"${keys[i].value}": `;
-        if (keys[i].value === 'flags') {
-            console.log("flags");
-        }
 
         /* used to check the value type of the key */
-        let keyParentSibling = keys[i].parentElement.nextElementSibling;
+        let keyParentSibling = keys[i].parentElement.parentElement.nextElementSibling;
         firstChild = keyParentSibling.children[0];
 
         if (firstChild.classList.contains("value-pair")){
@@ -309,6 +318,12 @@ function onPageLoad() {
 }
 
 onPageLoad();
+
+/* delete form group */
+$(document).on("click", ".delete-button", function(event){
+    let formGroup = event.target.parentElement.parentElement.parentElement;
+    formGroup.remove();
+ });
 
 $("#main-form").submit(function(e) {
     e.preventDefault(); // <==stop page refresh==>
