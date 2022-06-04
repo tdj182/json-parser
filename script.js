@@ -200,15 +200,6 @@ function addInput(type, startingValue) {
     return columnDiv;
 }
 
-// function generateDWMovesTemplate() {
-//     addKeyValuePair("_id", makeid(16));
-//     addKeyValuePair("name");
-//     addKeyValuePair("permission");
-//     addKeyValuePair("type");
-//     addKeyValuePair("data");
-//     addKeyValuePair("flags");
-//     addKeyValuePair("image");
-// }
 
 /* 
     check for parent -> parent -> next sibling 
@@ -256,7 +247,12 @@ function generateJson() {
         firstChild = keyParentSibling.children[0];
 
         if (firstChild.classList.contains("value-pair")){
-            json += `"${valuePairs[i-arrayAndObjectCounter].value}"`;
+            let inputStr = valuePairs[i-arrayAndObjectCounter].value;
+            if (onlyNumbers(inputStr)) 
+                json += `${inputStr}`;
+            else 
+                json += `"${inputStr}"`;
+            
             checkForClosingBrackets(valuePairs[i-arrayAndObjectCounter]);
             /* add comma for next key */
             json += `, `
@@ -278,7 +274,20 @@ function generateJson() {
 
     json = json.replace(/,\s*$/, "");
     json += "}";
+
+    document.getElementById("generated-json").value = json;
     console.log(json);
+}
+
+function onlyNumbers(str) {
+    return /^[0-9]+$/.test(str);
+}
+
+function clearFormOptions() {
+    const form = document.getElementById("main-form");
+    form.innerHTML = '';
+    let buttons = addButtons(["keyValue", "keyArray", "keyObject"]);
+    form.append(...buttons);
 }
 
 function clearJson() {
