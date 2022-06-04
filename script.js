@@ -1,3 +1,4 @@
+let json = '';
 function addButtons(buttonOptions) {
     let buttons = [];
     for(let i=0; i < buttonOptions.length; i++) {
@@ -91,7 +92,7 @@ function addKeyObjectPair(event, keyPreset="") {
     /* closing bracket */
     const closingBracket = document.createElement("div");
     closingBracket.innerText = "}";
-    closingBracket.classList.add("open-bracket");
+    closingBracket.classList.add("close-bracket");
     valueObjectBlock.append(closingBracket);
 
     rowDiv.append(valueObjectBlock);
@@ -143,14 +144,14 @@ function addKeyArrayPair(event, keyPreset="") {
     /* value array section */
     columnDiv = document.createElement("div");
     columnDiv.classList.add("py-2")
-    let buttons = addButtons(["keyArray", "keyObject", "valueOnly"]);
+    let buttons = addButtons(["valueOnly"]);
     columnDiv.append(...buttons);
     valueObjectBlock.append(columnDiv);
 
     /* closing bracket */
     const closingBracket = document.createElement("div");
     closingBracket.innerText = "]";
-    closingBracket.classList.add("open-bracket");
+    closingBracket.classList.add("close-bracket");
     valueObjectBlock.append(closingBracket);
 
     rowDiv.append(valueObjectBlock);
@@ -205,23 +206,79 @@ function generateDWMovesTemplate() {
     addKeyValuePair("image");
 }
 
-function generateJson() {
-    let json = '{';
-    const keys = document.querySelectorAll(".key-pair");
-    const valuePairs = document.querySelectorAll(".value-pair");
-    const valuesOnly = document.querySelectorAll(".value-only");
-    let arrayAndObjectCounter = 0;
+/* 
+    check for parent -> parent -> next sibling 
+    if no sibling, parent -> parent -> parent is the main form. In that case do nothing
+    if not main form, check parent -> parent -> parent -> nextsibling
+*/
+function checkForClosingBrackets(currentElement) {
+    if (currentElement.parentElement.parentElement.nextElementSibling === null) {
+        let closingBracketCheck = currentElement.parentElement.parentElement.parentElement;
+        if (closingBracketCheck.id !== "main-form" && closingBracketCheck.nextElementSibling.classList.contains("close-bracket")) {
+            json += closingBracketCheck.nextElementSibling.innerText;
+            checkForClosingBrackets(closingBracketCheck);
+        }
+    }
+}
 
-    for (let i=0; i < keys.length; i++) {
-        //get keys parent, and then sibling
-        let keySibling = keys[i].nextSibling;
-        if (keys[i])
-        json += `"${keys[i].value}": `;
-        json += `"${valuePairs[i].value}"`;
+function handleArrayList(parentElement) {
+    let listItems = parentElement.children[1].children;
+    for (let i=1; i < listItems.length; i++) {
+        json += `"${listItems[i].firstChild.firstChild.value}", `
     }
 
+    json = json.replace(/,\s*$/, "");
+    listItems.length === 1 ? json += ']' : checkForClosingBrackets(listItems[listItems.length-1].firstChild.firstChild);
+}
+
+function generateJson() {
+    clearJson();
+    json = '{';
+    const keys = document.querySelectorAll(".key-pair");
+    const valuePairs = document.querySelectorAll(".value-pair");
+    // const valuesOnly = document.querySelectorAll(".value-only");
+    let arrayAndObjectCounter = 0;
+    let arrayListItemCounter = 0
+
+    for (let i=0; i < keys.length; i++) {
+        /* add key */
+        json += `"${keys[i].value}": `;
+        if (keys[i].value === 'flags') {
+            console.log("flags");
+        }
+
+        /* used to check the value type of the key */
+        let keyParentSibling = keys[i].parentElement.nextElementSibling;
+        firstChild = keyParentSibling.children[0];
+
+        if (firstChild.classList.contains("value-pair")){
+            json += `"${valuePairs[i-arrayAndObjectCounter].value}"`;
+            checkForClosingBrackets(valuePairs[i-arrayAndObjectCounter]);
+            /* add comma for next key */
+            json += `, `
+        } else if (firstChild.classList.contains("open-bracket")){
+            arrayAndObjectCounter++;
+            json += firstChild.innerText;
+
+            /* edge case for empty object (length === 3 because of the 3 buttons) */
+            if (firstChild.innerText === "{" && keyParentSibling.children[1].children.length === 3){
+                json += '}, ';
+            }
+            /* do array stuff */ 
+            else if (firstChild.innerText === "["){
+                handleArrayList(firstChild.parentElement);
+                json += `, `
+            }
+        } 
+    }
+
+    json = json.replace(/,\s*$/, "");
     json += "}";
     console.log(json);
+}
+
+function clearJson() {
+    json = '';
 }
 
 function getHtmlValue() {
@@ -229,7 +286,10 @@ function getHtmlValue() {
     console.log(form);
 }
 
-// <!-- _id, name, permission, type, data, flags, image -->
-// <!-- data: {name, description, rollType, rollMod, requiresLevel, requiresMove, class, moveType} -->
+function refreshPage() {
+    location.reload();
+}
 
-// generateDWMovesTemplate();
+$("#main-form").submit(function(e) {
+    e.preventDefault(); // <==stop page refresh==>
+});

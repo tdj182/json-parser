@@ -11,7 +11,7 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">JSON<i class="fa-solid fa-truck-fast"></i></a>
+        <a class="navbar-brand" href="#" onclick="refreshPage()">JSON<i class="fa-solid fa-truck-fast"></i></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -30,8 +30,7 @@
         </div>
     </nav>
 
-    <h1>Moves Template</h1>
-    <div class="container">
+    <div class="container-float">
         <div>{</div>
         <form action="" id="main-form">
             <button type="button" class="btn btn-primary" onclick="addKeyValuePair(event)">Add (Key : Value)</button>
@@ -45,16 +44,26 @@
                     <input class="form-control value-pair" value="lkqlkskdjf">
                 </div>
             </div>
+            <!-- name -->
+            <div class="form-row">
+                <div class="col py-2">
+                    <input class="form-control key-pair" value="name">
+                </div>
+                <div class="col-9 py-2">
+                    <input class="form-control value-pair" value="">
+                </div>
+            </div>
             <div class="form-row">
                 <div class="col py-2">
                     <input class="form-control key-pair" value="permission">
                 </div>
+                <!-- permission -->
                 <div class="col-9">
                     <div class="open-bracket">{</div>
                     <div class="py-2">
-                        <button class="btn btn-primary" type="button">Add (Key : Value)</button>
-                        <button class="btn btn-primary" type="button">Add (Key : Array)</button>
-                        <button class="btn btn-primary" type="button">Add (Key : Object)</button>
+                        <button class="btn btn-primary" type="button" onclick="addKeyValuePair(event)">Add (Key : Value)</button>
+                        <button class="btn btn-primary" type="button" onclick="addKeyArrayPair(event)">Add (Key : Array)</button>
+                        <button class="btn btn-primary" type="button" onclick="addKeyObjectPair(event)">Add (Key : Object)</button>
                         <div class="form-row">
                             <div class="col py-2">
                                 <input class="form-control key-pair" value="default">
@@ -63,19 +72,156 @@
                                 <input class="form-control value-pair" value="0"></div>
                             </div>
                         </div>
-                    <div class="open-bracket">}</div>
+                    <div class="close-bracket">}</div>
+                </div>
+            </div>
+            <!-- type -->
+            <div class="form-row">
+                <div class="col py-2">
+                    <input class="form-control key-pair" value="type">
+                </div>
+                <div class="col-9 py-2">
+                    <input class="form-control value-pair" value="move">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col py-2">
+                    <input class="form-control key-pair" value="data">
+                </div>
+                <div class="col-9">
+                    <div class="open-bracket">{</div>
+                        <div class="py-2">
+                            <button class="btn btn-primary" type="button" onclick="addKeyValuePair(event)">Add (Key : Value)</button>
+                            <button class="btn btn-primary" type="button" onclick="addKeyArrayPair(event)">Add (Key : Array)</button>
+                            <button class="btn btn-primary" type="button" onclick="addKeyObjectPair(event)">Add (Key : Object)</button>
+                            <!-- name -->
+                            <div class="form-row">
+                                <div class="col py-2">
+                                    <input class="form-control key-pair" value="name">
+                                </div>
+                                <div class="col-9 py-2">
+                                    <input class="form-control value-pair" value="move">
+                                </div>
+                            </div>
+                            <!-- description -->
+                            <div class="form-row">
+                                <div class="col py-2">
+                                    <input class="form-control key-pair" value="description">
+                                </div>
+                                <div class="col-9 py-2">
+                                    <input class="form-control value-pair" value="move">
+                                </div>
+                            </div>
+                            <!-- rollType -->
+                            <div class="form-row">
+                                <div class="col py-2">
+                                    <input class="form-control key-pair" value="rollType">
+                                </div>
+                                <div class="col-9 py-2">
+                                    <input class="form-control value-pair" value="move">
+                                </div>
+                            </div>
+                            <!-- rollMod -->
+                            <div class="form-row">
+                                <div class="col py-2">
+                                    <input class="form-control key-pair" value="rollMod">
+                                </div>
+                                <div class="col-9 py-2">
+                                    <input class="form-control value-pair" value="move">
+                                </div>
+                            </div>
+                            <!-- requiresLevel -->
+                            <div class="form-row">
+                                <div class="col py-2">
+                                    <input class="form-control key-pair" value="requiresLevel">
+                                </div>
+                                <div class="col-9 py-2">
+                                    <input class="form-control value-pair" value="move">
+                                </div>
+                            </div>
+                            <!-- requiresMove -->
+                            <div class="form-row">
+                                <div class="col py-2">
+                                    <input class="form-control key-pair" value="requiresMove">
+                                </div>
+                                <div class="col-9 py-2">
+                                    <input class="form-control value-pair" value="move">
+                                </div>
+                            </div>
+                            <!-- class -->
+                            <div class="form-row">
+                                <div class="col py-2">
+                                    <input class="form-control key-pair" value="class">
+                                </div>
+                                <div class="col-9 py-2">
+                                    <input class="form-control value-pair" value="move">
+                                </div>
+                            </div>
+                            <!-- moveType -->
+                            <div class="form-row">
+                                <div class="col py-2">
+                                    <input class="form-control key-pair" value="moveType">
+                                </div>
+                                <div class="col-9 py-2">
+                                    <input class="form-control value-pair" value="move">
+                                </div>
+                            </div>
+                            <div class="form-row"><div class="col py-2"><input class="form-control key-pair" value="moveResults"></div><div class="col-9"><div class="open-bracket">{</div><div class="py-2"><button class="btn btn-primary" type="button" onclick="addKeyValuePair(event)">Add (Key : Value)</button><button class="btn btn-primary" type="button" onclick="addKeyArrayPair(event)">Add (Key : Array)</button><button class="btn btn-primary" type="button" onclick="addKeyObjectPair(event)">Add (Key : Object)</button><div class="form-row"><div class="col py-2"><input class="form-control key-pair" value="failure"></div><div class="col-9"><div class="open-bracket">{</div><div class="py-2"><button class="btn btn-primary" type="button" onclick="addKeyValuePair(event)">Add (Key : Value)</button><button class="btn btn-primary" type="button" onclick="addKeyArrayPair(event)">Add (Key : Array)</button><button class="btn btn-primary" type="button" onclick="addKeyObjectPair(event)">Add (Key : Object)</button>
+                            <!-- value -->
+                            <div class="form-row">
+                                <div class="col py-2">
+                                    <input class="form-control key-pair" value="value">
+                                </div>
+                                <div class="col-9 py-2">
+                                    <input class="form-control value-pair">
+                                </div>
+                            </div></div><div class="close-bracket">}</div></div></div><div class="form-row"><div class="col py-2"><input class="form-control key-pair" value="partial"></div><div class="col-9"><div class="open-bracket">{</div><div class="py-2"><button class="btn btn-primary" type="button" onclick="addKeyValuePair(event)">Add (Key : Value)</button><button class="btn btn-primary" type="button" onclick="addKeyArrayPair(event)">Add (Key : Array)</button><button class="btn btn-primary" type="button" onclick="addKeyObjectPair(event)">Add (Key : Object)</button>
+                            <!--  -->
+                            <div class="form-row">
+                                <div class="col py-2">
+                                    <input class="form-control key-pair" value="value">
+                                </div>
+                                <div class="col-9 py-2">
+                                    <input class="form-control value-pair">
+                                </div>
+                            </div></div><div class="close-bracket">}</div></div></div><div class="form-row"><div class="col py-2"><input class="form-control key-pair" value="success"></div><div class="col-9"><div class="open-bracket">{</div><div class="py-2"><button class="btn btn-primary" type="button" onclick="addKeyValuePair(event)">Add (Key : Value)</button><button class="btn btn-primary" type="button" onclick="addKeyArrayPair(event)">Add (Key : Array)</button><button class="btn btn-primary" type="button" onclick="addKeyObjectPair(event)">Add (Key : Object)</button>
+                            <!--  -->
+                            <div class="form-row">
+                                <div class="col py-2">
+                                    <input class="form-control key-pair" value="value">
+                                </div>
+                                <div class="col-9 py-2">
+                                    <input class="form-control value-pair">
+                                </div>
+                            </div></div><div class="close-bracket">}</div></div></div></div><div class="close-bracket">}</div></div></div></div><div class="close-bracket">}</div></div>
+            </div>
+            <div class="form-row">
+                <div class="col py-2">
+                    <input class="form-control key-pair" value="flags">
+                </div>
+                <div class="col-9">
+                    <div class="open-bracket">{</div>
+                        <div class="py-2">
+                            <button class="btn btn-primary" type="button" onclick="addKeyValuePair(event)">Add (Key : Value)</button>
+                            <button class="btn btn-primary" type="button" onclick="addKeyArrayPair(event)">Add (Key : Array)</button>
+                            <button class="btn btn-primary" type="button" onclick="addKeyObjectPair(event)">Add (Key : Object)</button>
+                        </div>
+                        <div class="close-bracket">}</div>
+                </div>
+            </div>
+            <!--  -->
+            <div class="form-row">
+                <div class="col py-2">
+                    <input class="form-control key-pair" value="img">
+                </div>
+                <div class="col-9 py-2">
+                    <input class="form-control value-pair">
                 </div>
             </div>
         </form>
-    </form>
         <div>}</div>
-        
-    <button type="button" class="btn btn-info" onclick="generateJson()">Generate</button>
+        <button type="button" class="btn btn-info" onclick="generateJson()">Generate</button>
     </div>
-
-      <!-- _id, name, permission, type, data, flags, image -->
-      <!-- data: {name, description, rollType, rollMod, requiresLevel, requiresMove, class, moveType} -->
-      <!-- <div class="form-row"><div class="col py-2"><input class="form-control key-pair" placeholder="key"></div><div class="col-9 py-2"><input class="form-control value-pair" placeholder="value"></div></div><div class="form-row"><div class="col py-2"><input class="form-control key-pair" placeholder="key"></div><div class="col-9 py-2"><input class="form-control value-pair" placeholder="value"></div></div><div class="form-row"><div class="col py-2"><input class="form-control key-pair" placeholder="key"></div><div class="col-9"><div class="open-bracket">{</div><div class="py-2"><button class="btn btn-primary" type="button">Add (Key : Value)</button><button class="btn btn-primary" type="button">Add (Key : Array)</button><button class="btn btn-primary" type="button">Add (Key : Object)</button><div class="form-row"><div class="col py-2"><input class="form-control key-pair" placeholder="key"></div><div class="col-9 py-2"><input class="form-control value-pair" placeholder="value"></div></div></div><div class="open-bracket">}</div></div></div><div class="form-row"><div class="col py-2"><input class="form-control key-pair" placeholder="key"></div><div class="col-9 py-2"><input class="form-control value-pair" placeholder="value"></div></div><div class="form-row"><div class="col py-2"><input class="form-control key-pair" placeholder="key"></div><div class="col-9"><div class="open-bracket">{</div><div class="py-2"><button class="btn btn-primary" type="button">Add (Key : Value)</button><button class="btn btn-primary" type="button">Add (Key : Array)</button><button class="btn btn-primary" type="button">Add (Key : Object)</button><div class="form-row"><div class="col py-2"><input class="form-control key-pair" placeholder="key"></div><div class="col-9 py-2"><input class="form-control value-pair" placeholder="value"></div></div><div class="form-row"><div class="col py-2"><input class="form-control key-pair" placeholder="key"></div><div class="col-9 py-2"><input class="form-control value-pair" placeholder="value"></div></div><div class="form-row"><div class="col py-2"><input class="form-control key-pair" placeholder="key"></div><div class="col-9 py-2"><input class="form-control value-pair" placeholder="value"></div></div><div class="form-row"><div class="col py-2"><input class="form-control key-pair" placeholder="key"></div><div class="col-9 py-2"><input class="form-control value-pair" placeholder="value"></div></div><div class="form-row"><div class="col py-2"><input class="form-control key-pair" placeholder="key"></div><div class="col-9 py-2"><input class="form-control value-pair" placeholder="value"></div></div><div class="form-row"><div class="col py-2"><input class="form-control key-pair" placeholder="key"></div><div class="col-9 py-2"><input class="form-control value-pair" placeholder="value"></div></div><div class="form-row"><div class="col py-2"><input class="form-control key-pair" placeholder="key"></div><div class="col-9 py-2"><input class="form-control value-pair" placeholder="value"></div></div><div class="form-row"><div class="col py-2"><input class="form-control key-pair" placeholder="key"></div><div class="col-9 py-2"><input class="form-control value-pair" placeholder="value"></div></div><div class="form-row"><div class="col py-2"><input class="form-control key-pair" placeholder="key"></div><div class="col-9"><div class="open-bracket">{</div><div class="py-2"><button class="btn btn-primary" type="button">Add (Key : Value)</button><button class="btn btn-primary" type="button">Add (Key : Array)</button><button class="btn btn-primary" type="button">Add (Key : Object)</button><div class="form-row"><div class="col py-2"><input class="form-control key-pair" placeholder="key"></div><div class="col-9"><div class="open-bracket">{</div><div class="py-2"><button class="btn btn-primary" type="button">Add (Key : Value)</button><button class="btn btn-primary" type="button">Add (Key : Array)</button><button class="btn btn-primary" type="button">Add (Key : Object)</button><div class="form-row"><div class="col py-2"><input class="form-control key-pair" placeholder="key"></div><div class="col-9 py-2"><input class="form-control value-pair" placeholder="value"></div></div></div><div class="open-bracket">}</div></div></div><div class="form-row"><div class="col py-2"><input class="form-control key-pair" placeholder="key"></div><div class="col-9"><div class="open-bracket">{</div><div class="py-2"><button class="btn btn-primary" type="button">Add (Key : Value)</button><button class="btn btn-primary" type="button">Add (Key : Array)</button><button class="btn btn-primary" type="button">Add (Key : Object)</button><div class="form-row"><div class="col py-2"><input class="form-control key-pair" placeholder="key"></div><div class="col-9 py-2"><input class="form-control value-pair" placeholder="value"></div></div></div><div class="open-bracket">}</div></div></div><div class="form-row"><div class="col py-2"><input class="form-control key-pair" placeholder="key"></div><div class="col-9"><div class="open-bracket">{</div><div class="py-2"><button class="btn btn-primary" type="button">Add (Key : Value)</button><button class="btn btn-primary" type="button">Add (Key : Array)</button><button class="btn btn-primary" type="button">Add (Key : Object)</button><div class="form-row"><div class="col py-2"><input class="form-control key-pair" placeholder="key"></div><div class="col-9 py-2"><input class="form-control value-pair" placeholder="value"></div></div></div><div class="open-bracket">}</div></div></div></div><div class="open-bracket">}</div></div></div></div><div class="open-bracket">}</div></div></div><div class="form-row"><div class="col py-2"><input class="form-control key-pair" placeholder="key"></div><div class="col-9"><div class="open-bracket">{</div><div class="py-2"><button class="btn btn-primary" type="button">Add (Key : Value)</button><button class="btn btn-primary" type="button">Add (Key : Array)</button><button class="btn btn-primary" type="button">Add (Key : Object)</button></div><div class="open-bracket">}</div></div></div><div class="form-row"><div class="col py-2"><input class="form-control key-pair" placeholder="key"></div><div class="col-9 py-2"><input class="form-control value-pair" placeholder="value"></div></div>     -->
     
       <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
