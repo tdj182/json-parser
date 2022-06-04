@@ -179,8 +179,12 @@ function addInput(type, startingValue) {
     /* input */
     let input = document.createElement("input");
     input.classList.add("form-control");
-    if (type === "key") 
+    if (type === "key") {
         input.classList.add("key-pair");
+        // let deleteButton = document.createElement("span");
+        // deleteButton.innerText = "X";
+        // columnDiv.append(deleteButton);
+    }
     else if (type === "valuePair")
         input.classList.add("value-pair")
     else if (type === "valueOnly")
@@ -196,15 +200,15 @@ function addInput(type, startingValue) {
     return columnDiv;
 }
 
-function generateDWMovesTemplate() {
-    addKeyValuePair("_id", makeid(16));
-    addKeyValuePair("name");
-    addKeyValuePair("permission");
-    addKeyValuePair("type");
-    addKeyValuePair("data");
-    addKeyValuePair("flags");
-    addKeyValuePair("image");
-}
+// function generateDWMovesTemplate() {
+//     addKeyValuePair("_id", makeid(16));
+//     addKeyValuePair("name");
+//     addKeyValuePair("permission");
+//     addKeyValuePair("type");
+//     addKeyValuePair("data");
+//     addKeyValuePair("flags");
+//     addKeyValuePair("image");
+// }
 
 /* 
     check for parent -> parent -> next sibling 
