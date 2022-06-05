@@ -311,6 +311,10 @@ function clearJson() {
 
 function getHtmlValue() {
     let form = document.getElementById("main-form");
+    $('#main-form :input').not(':input[type=button]').each(function(){
+        let input = $(this);
+        input.attr('value', input.val());
+    });
     console.log($("#main-form").html());
 }
 
