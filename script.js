@@ -170,9 +170,7 @@ function makeid(length) {
    return result;
 }
 
-function createKeySection(keyInput) {
-    // <button class="btn btn-outline-danger delete-button">x</button>
-    // <div class="d-flex flex-row"></div>
+function createInputWithDelete(input, inputType="key") {
     /* div */
     let wrapperDiv = document.createElement("div");
     wrapperDiv.classList.add("d-flex", "flex-row");
@@ -180,10 +178,10 @@ function createKeySection(keyInput) {
     let deleteButton = document.createElement("button");
     deleteButton.innerText = "X";
     deleteButton.classList.add("btn", "btn-outline-danger", "delete-button");
-    /* key input */
-    keyInput.classList.add("key-pair");
+    /* input */
+    inputType === "key" ? input.classList.add("key-pair") : input.classList.add("value-pair")
 
-    wrapperDiv.append(deleteButton, keyInput);
+    wrapperDiv.append(deleteButton, input);
     return wrapperDiv;
 }
 
@@ -197,11 +195,12 @@ function addInput(type, startingValue) {
     let input = document.createElement("input");
     input.classList.add("form-control");
     if (type === "key") 
-        input = createKeySection(input);
+        input = createInputWithDelete(input, "key");
     else if (type === "valuePair")
         input.classList.add("value-pair")
     else if (type === "valueOnly")
-        input.classList.add("value-pair")
+        input = createInputWithDelete(input, "value");
+        // input.classList.add("value-pair")
     
     if (startingValue !== "")
         input.value = startingValue;
@@ -231,7 +230,7 @@ function checkForClosingBrackets(currentElement) {
 function handleArrayList(parentElement) {
     let listItems = parentElement.children[1].children;
     for (let i=1; i < listItems.length; i++) {
-        json += `"${listItems[i].firstChild.firstChild.value}", `
+        json += `"${listItems[i].firstChild.firstChild.children[1].value}", `
     }
 
     json = json.replace(/,\s*$/, "");
