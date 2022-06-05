@@ -1,4 +1,5 @@
 let json = '';
+
 function addButtons(buttonOptions) {
     let buttons = [];
     for(let i=0; i < buttonOptions.length; i++) {
@@ -8,22 +9,26 @@ function addButtons(buttonOptions) {
         switch(buttonOptions[i]) {
             case "keyValue": {
                 button.innerText = "Add (Key : Value)";
-                button.onclick = addKeyValuePair;
+                // button.onclick = addKeyValuePair;
+                button.classList.add("key-value-pair-btn");
                 break;
             }
             case "keyArray": {
                 button.innerText = "Add (Key : Array)";
-                button.onclick = addKeyArrayPair;
+                // button.onclick = addKeyArrayPair;
+                button.classList.add("key-array-pair-btn");
                 break;
             }
             case "keyObject": {
                 button.innerText = "Add (Key : Object)";
-                button.onclick = addKeyObjectPair;
+                // button.onclick = addKeyObjectPair;
+                button.classList.add("key-object-pair-btn");
                 break;
             }
             case "valueOnly": {
                 button.innerText = "Add value";
-                button.onclick = addInputBoxOnly;
+                // button.onclick = addInputBoxOnly;
+                button.classList.add("value-only-btn");
                 break;
             }
             default: {
@@ -306,7 +311,7 @@ function clearJson() {
 
 function getHtmlValue() {
     let form = document.getElementById("main-form");
-    console.log(form);
+    console.log($("#main-form").html());
 }
 
 function refreshPage() {
@@ -314,11 +319,20 @@ function refreshPage() {
 }
 
 function onPageLoad() {
-    let values = document.getElementsByClassName("value-pair");
-    values[0].value = makeid(16);
+    addPrebuiltFormHTML(movesTemplate, true);
 }
 
 onPageLoad();
+
+/* add form data */
+function addPrebuiltFormHTML(html, isGenerateId=false){
+    $("#main-form").empty();
+    $("#main-form").html(html);
+    if (isGenerateId) {
+        let values = document.getElementsByClassName("value-pair");
+        values[0].value = makeid(16);
+    }
+}
 
 /* delete form group */
 $(document).on("click", ".delete-button", function(event){
@@ -326,6 +340,28 @@ $(document).on("click", ".delete-button", function(event){
     formGroup.remove();
  });
 
+$(document).on("click", ".key-value-pair-btn", (event) => {
+    addKeyValuePair(event);
+});
+
+$(document).on("click", ".key-array-pair-btn", (event) => {
+    addKeyArrayPair(event);
+});
+
+$(document).on("click", ".key-object-pair-btn", (event) => {
+    addKeyObjectPair(event);
+});
+
+$(document).on("click", ".value-only-btn", (event) => {
+    addInputBoxOnly(event);
+});
+
 $("#main-form").submit(function(e) {
     e.preventDefault(); // <==stop page refresh==>
 });
+
+
+
+
+
+
