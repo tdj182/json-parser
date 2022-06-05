@@ -230,7 +230,9 @@ function checkForClosingBrackets(currentElement) {
 function handleArrayList(parentElement) {
     let listItems = parentElement.children[1].children;
     for (let i=1; i < listItems.length; i++) {
-        json += `"${listItems[i].firstChild.firstChild.children[1].value}", `
+        inputStr = listItems[i].firstChild.firstChild.children[1].value;
+        json += (onlyNumbers(inputStr)) ? `${inputStr}, ` : `"${inputStr}", `
+        // json += `"${}", `
     }
 
     json = json.replace(/,\s*$/, "");
